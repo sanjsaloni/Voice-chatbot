@@ -7,8 +7,9 @@ import functionality as fun
 
 
 engine = pt.init()
+print(engine)
 voice = engine.getProperty('voices')
-engine.setProperty('voice',voice[0].id)
+engine.setProperty('voice',voice[1].id)
 engine.setProperty('rate',150)
 
 def talk(text):
@@ -32,28 +33,21 @@ def take_command():
 def add(file_path,key):
     with open(file_path,'r') as f:
         data = json.load(f)
-    
-    if None == key or 'null'==key:
-        talk("Could not hear you")
-        # del key
-    if "wish" in key:
-        talk("Can i know your name?")
-        # name = input("Enter the name: ")
-        name = take_command()
-        print(name)
-        fun.wishme(name)
-    # if key in data.keys(): #For unknown input stream!
-        # talk(data[key])
+    print(data)
+    if key in data:
+        k = data[key]
+        print(k)
+        talk(data[key])
     else:
         talk("Please answer the question.")
         value = take_command()
         data[key] = value
         with open(file_path,'w') as f:
             json.dump(data,f)
-    print(data)
+    # print(data)
 
 
-if __name__ in '__main__':
+if __name__ == '__main__':
     filePath = "dict.json"
     print('Started')
     # key = input("Enter the string")
